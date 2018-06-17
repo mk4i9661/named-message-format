@@ -1,17 +1,17 @@
-package org.task;
+package org.mki;
 
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class RawGroupTest {
+public class RawTokenTest {
 
     @Test
     public void shouldRemoveQuotes() {
         // checks whether the class handles quotes in a way similar to MessageFormat.format
 
-        RawGroup group = RawGroup.of("Hello, my name is 'John'.");
+        RawToken group = RawToken.of("Hello, my name is 'John'.");
         assertThat(group.toString(), is("Hello, my name is John."));
     }
 
@@ -19,7 +19,7 @@ public class RawGroupTest {
     public void shouldHandleDoubleQuotes() {
         // checks whether the class handles double quotes in a way similar to MessageFormat.format
 
-        RawGroup group = RawGroup.of("He is a friend of John''s.");
+        RawToken group = RawToken.of("He is a friend of John''s.");
         assertThat(group.toString(), is("He is a friend of John's."));
     }
 }

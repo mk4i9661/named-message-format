@@ -1,17 +1,19 @@
-package org.task;
+package org.mki;
 
 import org.junit.Test;
 
 import java.text.MessageFormat;
 import java.time.LocalDate;
 import java.time.ZoneOffset;
-import java.util.*;
+import java.util.Collections;
+import java.util.Date;
+import java.util.Map;
+import java.util.TreeMap;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class NamedMessageFormatTest {
-
 
     private static Map<String, Object> parameters() {
         TreeMap<String, Object> parameters = new TreeMap<>();
@@ -28,67 +30,15 @@ public class NamedMessageFormatTest {
 
         String s = "My name 'is {name}' I am {age} years old. My father''s name was {name}";
 
-//        List<NamedGroup> groups = new ArrayList<>();
-//        boolean raw = false;
-//        int quotes = 0;
-//        int from = 0;
-//        int to = 0;
-//        for (int i = 0; i < s.length(); i++) {
-//            char charAt = s.charAt(i);
-//            if (charAt == '\'') {
-//                if (!raw) {
-//
-//                }
-//                raw = !raw;
-//            } else {
-//                if (raw)
-//                    continue;
-//
-//                if (charAt == '{') {
-//                    from = i;
-//                    quotes++;
-//                } else if (charAt == '}') {
-//                    to = i;
-//                    quotes--;
-////                    groups.add(s.substring(from, to + 1));
-//                    if (quotes == 0) {
-//
-////                        groups.add(new NamedGroup(s, identifier, from, to + 1));
-//                        groups.add(NamedGroup.of(s, from, to + 1));
-//                    }
-//                }
-//            }
-//        }
-//
-//        if (quotes != 0)
-//            throw new RuntimeException("Unmatched braces in the pattern.");
-//
-//        PreparedPattern pattern = PreparedPattern.from(s, groups);
-
         PreparedPattern pattern = PreparedPattern.ofPattern(s);
         assertThat(
                 pattern.apply(parameters()),
                 is("My name is {name} I am 20 years old. My father's name was John")
         );
-
-
     }
 
     @Test
     public void shouldMatchExample() {
-//        NamedMessageFormat format = new NamedMessageFormat("{date,time,dd.MM.yyyy}");
-//        Map<String, Object> param = new HashMap<>();
-//
-//        Date date = Date.from(
-//                LocalDate.of(2018, 6, 15)
-//                        .atStartOfDay().toInstant(ZoneOffset.UTC)
-//        );
-//
-//        param.put("date", date);
-//
-//        assertThat(format.format(param), is("15.06.2018"));
-
-
         NamedMessageFormat format = new NamedMessageFormat("{date,time,dd.MM.yyyy}");
         String result = format.format(
                 Collections.singletonMap(
@@ -106,20 +56,6 @@ public class NamedMessageFormatTest {
 
     @Test
     public void shouldHandleQuotes() {
-//        assertThat(
-//                NamedMessageFormat.format("'{''}'", parameters()),
-//                is("{'}")
-//        );
-//
-//        assertThat(
-//                NamedMessageFormat.format(
-//                        "My '{name}' is {name} and my {age} is '{age}'",
-//                        parameters()
-//                ),
-//                is("My {name} is John and my 20 is {age}")
-//        );
-
-
         assertThat(
                 NamedMessageFormat.format("'{''}'", parameters()),
                 is("{'}")

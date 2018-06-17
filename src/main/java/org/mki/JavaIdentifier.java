@@ -1,7 +1,15 @@
-package org.task;
+package org.mki;
 
+import java.util.Objects;
+import java.util.regex.Pattern;
 
+/**
+ * A value class that represents a valid Java identifier.
+ */
 public class JavaIdentifier {
+    private static final Pattern JAVA_IDENTIFIER_PATTERN =
+            Pattern.compile("\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*");
+
     private final String name;
 
     private JavaIdentifier(String name) {
@@ -19,18 +27,7 @@ public class JavaIdentifier {
         if (name == null || name.length() == 0)
             throw new InvalidJavaIdentifierException("Empty string is not a valid Java identifier.");
 
-        if (!Character.isJavaIdentifierStart(name.charAt(0))) {
-            throw new InvalidJavaIdentifierException(
-                    String.format(
-                            "'%s' is not a valid Java identifier.",
-                            name
-                    )
-            );
-        }
-
-        if (name.chars()
-                .skip(1)
-                .anyMatch(c -> !Character.isJavaIdentifierPart(c))) {
+        if (!JAVA_IDENTIFIER_PATTERN.matcher(name).matches()) {
             throw new InvalidJavaIdentifierException(
                     String.format(
                             "'%s' is not a valid Java identifier.",
@@ -40,5 +37,18 @@ public class JavaIdentifier {
         }
 
         return new JavaIdentifier(name);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        JavaIdentifier that = (JavaIdentifier) o;
+        return Objects.equals(name, that.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 }

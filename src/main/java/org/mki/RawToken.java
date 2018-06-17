@@ -1,20 +1,19 @@
-package org.task;
+package org.mki;
 
 import java.text.MessageFormat;
 
-class RawGroup implements Token {
+/**
+ * Represents a string 'as is' without any format transformations (has no curly braces in it)
+ */
+public class RawToken implements Token {
     private final String source;
 
-    private RawGroup(String source) {
+    private RawToken(String source) {
         this.source = source;
     }
 
-    static RawGroup of(String patter, int from, int to) {
-        return new RawGroup(patter.substring(from, to));
-    }
-
-    static RawGroup of(String patter) {
-        return new RawGroup(patter);
+    static RawToken of(String patter) {
+        return new RawToken(patter);
     }
 
     @Override

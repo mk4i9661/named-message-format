@@ -1,8 +1,8 @@
-package org.task;
+package org.mki;
 
 import java.util.Map;
 
-class NamedMessageFormat {
+public class NamedMessageFormat {
     private final PreparedPattern pattern;
 
     public NamedMessageFormat(String pattern) {
