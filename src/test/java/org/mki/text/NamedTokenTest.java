@@ -1,4 +1,4 @@
-package org.mki;
+package org.mki.text;
 
 import org.junit.Test;
 

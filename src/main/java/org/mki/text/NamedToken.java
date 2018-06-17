@@ -1,4 +1,4 @@
-package org.mki;
+package org.mki.text;
 
 import java.text.MessageFormat;
 import java.util.regex.Matcher;

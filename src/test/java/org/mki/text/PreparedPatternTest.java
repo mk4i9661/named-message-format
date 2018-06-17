@@ -1,4 +1,4 @@
-package org.mki;
+package org.mki.text;
 
 import org.junit.Test;
 
@@ -85,7 +85,7 @@ public class PreparedPatternTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void shouldFailSingleOpeningBrace() {
-        PreparedPattern pattern = PreparedPattern.ofPattern("{");
+        PreparedPattern.ofPattern("{");
     }
 
     @Test

@@ -1,4 +1,4 @@
-package org.mki;
+package org.mki.text;
 
 import java.util.Map;
 

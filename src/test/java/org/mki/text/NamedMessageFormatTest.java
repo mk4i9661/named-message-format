@@ -1,8 +1,7 @@
-package org.mki;
+package org.mki.text;
 
 import org.junit.Test;
 
-import java.text.MessageFormat;
 import java.time.LocalDate;
 import java.time.ZoneOffset;
 import java.util.Collections;
@@ -26,8 +25,6 @@ public class NamedMessageFormatTest {
 
     @Test
     public void a() {
-        String format = MessageFormat.format("My name 'is {0}' and {0, number, test}", new Object[0]);
-
         String s = "My name 'is {name}' I am {age} years old. My father''s name was {name}";
 
         PreparedPattern pattern = PreparedPattern.ofPattern(s);

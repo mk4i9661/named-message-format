@@ -1,4 +1,4 @@
-package org.mki;
+package org.mki.text;
 
 public class InvalidNamedGroupException extends RuntimeException {
     public InvalidNamedGroupException(String message) {
