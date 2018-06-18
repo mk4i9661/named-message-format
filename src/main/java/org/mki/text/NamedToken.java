@@ -10,7 +10,7 @@ public class NamedToken implements Token {
             "\\{"
                     // matches the parameter name
                     // (allows valid java identifiers only)
-                    + "(?<identifier>\\s*\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}+\\s*)"
+                    + "(?<identifier>" + JavaIdentifier.JAVA_IDENTIFIER_PATTERN_VALUE + ")"
                     //matches the format type
                     + "(?<type>\\s*\\,?\\s*\\w+\\s*)?"
                     //matches the format style

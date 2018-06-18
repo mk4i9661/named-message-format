@@ -7,8 +7,11 @@ import java.util.regex.Pattern;
  * A value class that represents a valid Java identifier.
  */
 public class JavaIdentifier {
+    static final String JAVA_IDENTIFIER_PATTERN_VALUE =
+            "\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*";
+
     private static final Pattern JAVA_IDENTIFIER_PATTERN =
-            Pattern.compile("\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*");
+            Pattern.compile(JAVA_IDENTIFIER_PATTERN_VALUE);
 
     private final String name;
 
