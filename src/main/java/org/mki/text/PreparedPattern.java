@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class PreparedPattern {
     final List<Token> tokens;
@@ -19,12 +20,9 @@ public class PreparedPattern {
      * @return
      */
     public String apply(Map<String, Object> parameters) {
-        StringBuilder builder = new StringBuilder();
-        for (Token token : tokens) {
-            builder.append(new ParametersAwareToken(token, parameters));
-        }
-
-        return builder.toString();
+        return tokens.stream()
+                .map(token -> new ParametersAwareToken(token, parameters).toString())
+                .collect(Collectors.joining());
     }
 
     public String apply(String name, Object value) {
