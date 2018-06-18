@@ -89,7 +89,7 @@ public class PreparedPatternTest {
     }
 
     @Test
-    public void shouldHandleSingleClosingBrace(){
+    public void shouldHandleSingleClosingBrace() {
         PreparedPattern pattern = PreparedPattern.ofPattern("}");
         assertThat(pattern.tokens, hasSize(1));
         assertThat(pattern.tokens.get(0).toString(), is("}"));

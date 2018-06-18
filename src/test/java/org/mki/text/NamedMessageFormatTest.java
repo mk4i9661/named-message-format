@@ -22,18 +22,6 @@ public class NamedMessageFormatTest {
         return parameters;
     }
 
-
-    @Test
-    public void a() {
-        String s = "My name 'is {name}' I am {age} years old. My father''s name was {name}";
-
-        PreparedPattern pattern = PreparedPattern.ofPattern(s);
-        assertThat(
-                pattern.apply(parameters()),
-                is("My name is {name} I am 20 years old. My father's name was John")
-        );
-    }
-
     @Test
     public void shouldMatchExample() {
         NamedMessageFormat format = new NamedMessageFormat("{date,time,dd.MM.yyyy}");
