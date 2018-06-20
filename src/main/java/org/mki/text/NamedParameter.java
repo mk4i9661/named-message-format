@@ -1,10 +1,12 @@
 package org.mki.text;
 
-import java.text.MessageFormat;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class NamedToken implements Token {
+/**
+ * Represents a ready to use pattern with named attributes in it ({name}, {age} etc.)
+ */
+class NamedParameter {
     private static final String NAMED_TOKEN_PATTERN_VALUE =
             //matches the opening brace
             "\\{"
@@ -21,17 +23,17 @@ public class NamedToken implements Token {
     private static final Pattern NAMED_TOKEN_PATTERN = Pattern.compile(NAMED_TOKEN_PATTERN_VALUE);
 
     private final JavaIdentifier identifier;
-    private final String source;
-    private final String pattern;
+    private final String namedPattern;
+    private final String indexedPattern;
 
-    private NamedToken(JavaIdentifier identifier, String source, String pattern) {
-        this.source = source;
+    private NamedParameter(JavaIdentifier identifier, String indexedPattern, String namedPattern) {
         this.identifier = identifier;
-        this.pattern = pattern;
+        this.namedPattern = namedPattern;
+        this.indexedPattern = indexedPattern;
     }
 
-    public static NamedToken of(String group) throws InvalidJavaIdentifierException, InvalidNamedGroupException {
-        Matcher matcher = NAMED_TOKEN_PATTERN.matcher(group);
+    public static NamedParameter of(String pattern) throws InvalidJavaIdentifierException, InvalidNamedGroupException {
+        Matcher matcher = NAMED_TOKEN_PATTERN.matcher(pattern);
         if (matcher.matches()) {
             String identifier = matcher.group("identifier");
             JavaIdentifier javaIdentifier = JavaIdentifier.of(identifier);
@@ -55,15 +57,15 @@ public class NamedToken implements Token {
             // append the end of the match to the buffer
             matcher.appendTail(buffer);
 
-            return new NamedToken(
+            return new NamedParameter(
                     javaIdentifier,
                     buffer.toString(),
-                    group
+                    pattern
             );
         }
 
         throw new InvalidNamedGroupException(
-                String.format("'%s' is not a pattern.", group)
+                String.format("'%s' is not a pattern.", pattern)
         );
     }
 
@@ -73,11 +75,10 @@ public class NamedToken implements Token {
 
     @Override
     public String toString() {
-        return pattern;
+        return namedPattern;
     }
 
-    public String toString(Object value) {
-        //MessageFormat is not thread safe, so create a new one
-        return MessageFormat.format(source, value);
+    public String format(Formatter formatter, Object value) {
+        return formatter.format(indexedPattern, value);
     }
 }

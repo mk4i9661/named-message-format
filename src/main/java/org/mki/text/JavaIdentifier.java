@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 /**
  * A value class that represents a valid Java identifier.
  */
-public class JavaIdentifier {
+class JavaIdentifier {
     static final String JAVA_IDENTIFIER_PATTERN_VALUE =
             "\\p{javaJavaIdentifierStart}\\p{javaJavaIdentifierPart}*";
 
