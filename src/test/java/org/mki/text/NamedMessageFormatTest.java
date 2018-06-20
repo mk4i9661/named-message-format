@@ -4,13 +4,11 @@ import org.junit.Test;
 
 import java.time.LocalDate;
 import java.time.ZoneOffset;
-import java.util.Collections;
-import java.util.Date;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.mki.text.UsFormatter.US_FORMATTER;
 
 public class NamedMessageFormatTest {
 
@@ -24,7 +22,10 @@ public class NamedMessageFormatTest {
 
     @Test
     public void shouldMatchExample() {
-        NamedMessageFormat format = new NamedMessageFormat("{date,time,dd.MM.yyyy}");
+        NamedMessageFormat format = new NamedMessageFormat(
+                "{date,time,dd.MM.yyyy}",
+                US_FORMATTER
+        );
         String result = format.format(
                 Collections.singletonMap(
                         "date",
@@ -42,12 +43,16 @@ public class NamedMessageFormatTest {
     @Test
     public void shouldHandleQuotes() {
         assertThat(
-                NamedMessageFormat.format("'{''}'", parameters()),
+                NamedMessageFormat.format("'{''}'", parameters(), US_FORMATTER),
                 is("{'}")
         );
 
         assertThat(
-                NamedMessageFormat.format("My '{name}' is {name} and my {age} is '{age}'", parameters()),
+                NamedMessageFormat.format(
+                        "My '{name}' is {name} and my {age} is '{age}'",
+                        parameters(),
+                        US_FORMATTER
+                ),
                 is("My {name} is John and my 20 is {age}")
         );
     }
@@ -57,7 +62,8 @@ public class NamedMessageFormatTest {
         assertThat(
                 NamedMessageFormat.format(
                         "Hello, my name is {name} and I am {age} years old.",
-                        parameters()
+                        parameters(),
+                        US_FORMATTER
                 ),
                 is("Hello, my name is John and I am 20 years old.")
         );
@@ -65,7 +71,8 @@ public class NamedMessageFormatTest {
         assertThat(
                 NamedMessageFormat.format(
                         "Hello, my name is {name}. I was named after my father {name}. I am {age} years old.",
-                        parameters()
+                        parameters(),
+                        US_FORMATTER
                 ),
                 is("Hello, my name is John. I was named after my father John. I am 20 years old.")
         );
@@ -73,7 +80,8 @@ public class NamedMessageFormatTest {
         assertThat(
                 NamedMessageFormat.format(
                         "Hello, my name is {name}. I am {age} years old. I was named after my father {name}.",
-                        parameters()
+                        parameters(),
+                        US_FORMATTER
                 ),
                 is("Hello, my name is John. I am 20 years old. I was named after my father John.")
         );
@@ -81,7 +89,8 @@ public class NamedMessageFormatTest {
         assertThat(
                 NamedMessageFormat.format(
                         "The price of this item is {price, number,$'#'.##}",
-                        parameters()
+                        parameters(),
+                        US_FORMATTER
                 ),
                 is("The price of this item is $#31.45")
         );
@@ -89,10 +98,24 @@ public class NamedMessageFormatTest {
         assertThat(
                 NamedMessageFormat.format(
                         "{pi,number,#.##}, {pi,number,#.#}",
-                        Collections.singletonMap("pi", Math.PI)
+                        Collections.singletonMap("pi", Math.PI),
+                        US_FORMATTER
                 ),
                 is("3.14, 3.1")
         );
+    }
+
+    @Test
+    public void shouldUseSpecifiedLocale() {
+        assertThat(
+                NamedMessageFormat.format(
+                        "{pi,number,#.##}, {pi,number,#.#}",
+                        Collections.singletonMap("pi", Math.PI),
+                        Locale.forLanguageTag("RU")
+                ),
+                is("3,14, 3,1")
+        );
+
     }
 
 }
